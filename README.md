@@ -18,12 +18,11 @@ Major components include the microcontroller to compile embedded rust, an inerti
 4. Send output data back to the host machine
 5. Test
 
-
-Possible Challenges
+## Possible Challenges
 - Hardware/software incompatibility 
 - Language barriers in implementing ML
 - Time sink due to prototyping/testing different hardware
 - Parsing raw sensor data
 
-References
+## References
 - N/A
