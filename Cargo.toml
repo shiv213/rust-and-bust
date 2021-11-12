@@ -1,0 +1,31 @@
+[package]
+name = "jeshture"
+version = "0.1.0"
+authors = ["Shiv Trivedi", "Jessica Singh", "Shayan Azmoodeh"]
+edition = "2021"
+homepage = "https://github.com/shiv213/rust-and-bust"
+description = "ML based gesture interpretation using an IMU"
+license = "MIT"
+
+[dependencies]
+pico = { git = "https://github.com/rp-rs/rp-hal.git" }
+mpu6050 = "0.1.4"
+cortex-m = "0.7.2"
+rp2040-hal = { path = "rp2040-hal", version = "0.3.0"}
+cortex-m-rt = { version = "0.7", optional = true }
+embedded-time = "0.12.0"
+usb-device= "0.2.8"
+usbd-serial = "0.1.1"
+usbd-hid = "0.5.1"
+
+[dev-dependencies]
+panic-halt= "0.2.0"
+embedded-hal ="0.2.5"
+cortex-m-rtic = "0.6.0-alpha.5"
+rp2040-boot2 = "0.2"
+nb = "1.0"
+i2c-pio = { git = "https://github.com/ithinuel/i2c-pio-rs", rev = "fb6167d02b7fbc46a83f344f5242823bcd16e271" }
+
+[features]
+default = ["rt"]
+rt = ["cortex-m-rt","rp2040-hal/rt"]
