@@ -17,7 +17,7 @@ jobs:
       - uses: actions-rs/cargo@v1
         with:
           command: check
-          args: --workspace --examples --features eh1_0_alpha
+          args: --workspace --examples
       - uses: actions-rs/cargo@v1
         with:
           command: test
