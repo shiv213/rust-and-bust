@@ -8,6 +8,7 @@ description = "ML based gesture interpretation using an IMU"
 license = "MIT"
 
 [dependencies]
+no-std-compat = "0.4.1"
 serde = { version = "1.0", default-features = false, features = ["derive"] }
 serde-json-core = "0.4.0"
 mpu6050 = "0.1.4"

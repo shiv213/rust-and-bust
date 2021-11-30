@@ -6,6 +6,8 @@
 
 use mpu6050::*;
 
+use no_std_compat::mem;
+
 // The trait used by formatting macros like write! and writeln!
 // use core::fmt::Write as FmtWrite;
 
@@ -43,15 +45,15 @@ use usb_device::{class_prelude::*, prelude::*};
 use usbd_serial::SerialPort;
 
 // Serde support
-// use serde::{Serialize, Deserialize};
+use serde::{Serialize, Deserialize};
 
 // TODO define custom struct for IMU data
-// #[derive(Serialize, Deserialize)]
-// struct IMUData {
-//     accel_x: f32,
-//     accel_y: f32,
-//     accel_z: f32,
-// }
+#[derive(Serialize, Deserialize)]
+struct IMUData {
+    accel_x: f32,
+    accel_y: f32,
+    accel_z: f32,
+}
 
 //// The linker will place this boot block at the start of our program image. We
 //// need this to help the ROM bootloader get our code up and running.
@@ -87,8 +89,8 @@ fn main() -> ! {
         &mut pac.RESETS,
         &mut watchdog,
     )
-    .ok()
-    .unwrap();
+        .ok()
+        .unwrap();
 
     // The delay object lets us wait for specified amounts of time (in
     // milliseconds)
@@ -206,16 +208,14 @@ fn main() -> ! {
                     //     });
                     // }
                     let acc = mpu.get_acc().unwrap();
-                    let x = serde_json_core::to_string::<f32, 32>(&(*&acc.x as f32)).unwrap();
-                    let y = serde_json_core::to_string::<f32, 32>(&(*&acc.y as f32)).unwrap();
-                    let z = serde_json_core::to_string::<f32, 32>(&(*&acc.z as f32)).unwrap();
-                    let _ = serial.write(b"{ \"x\": ");
-                    let _ = serial.write(x.as_bytes());
-                    let _ = serial.write(b", \"y\": ");
-                    let _ = serial.write(y.as_bytes());
-                    let _ = serial.write(b", \"z\": ");
-                    let _ = serial.write(z.as_bytes());
-                    let _ = serial.write(b"}\r\n");
+                    let data = IMUData {
+                        accel_x: acc.x,
+                        accel_y: acc.y,
+                        accel_z: acc.z,
+                    };
+                    let serialized = serde_json_core::to_string::<IMUData, { mem::size_of::<IMUData>() * 8 }>(&data).unwrap();
+                    let _ = serial.write(serialized.as_bytes());
+                    let _ = serial.write(b"\r\n");
                 }
             }
         }

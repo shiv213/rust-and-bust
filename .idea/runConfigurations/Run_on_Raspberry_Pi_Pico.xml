@@ -1,6 +1,6 @@
 <component name="ProjectRunConfigurationManager">
   <configuration default="false" name="Run on Raspberry Pi Pico" type="CargoCommandRunConfiguration" factoryName="Cargo Command">
-    <option name="command" value="run --release --target thumbv7m-none-eabi " />
+    <option name="command" value="run --release" />
     <option name="workingDirectory" value="file://$PROJECT_DIR$" />
     <option name="channel" value="DEFAULT" />
     <option name="requiredFeatures" value="true" />
