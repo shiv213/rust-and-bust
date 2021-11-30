@@ -209,11 +209,11 @@ fn main() -> ! {
                     let x = serde_json_core::to_string::<f32, 32>(&(*&acc.x as f32)).unwrap();
                     let y = serde_json_core::to_string::<f32, 32>(&(*&acc.y as f32)).unwrap();
                     let z = serde_json_core::to_string::<f32, 32>(&(*&acc.z as f32)).unwrap();
-                    let _ = serial.write(b"{ x: ");
+                    let _ = serial.write(b"{ \"x\": ");
                     let _ = serial.write(x.as_bytes());
-                    let _ = serial.write(b", { y: ");
+                    let _ = serial.write(b", \"y\": ");
                     let _ = serial.write(y.as_bytes());
-                    let _ = serial.write(b", { z: ");
+                    let _ = serial.write(b", \"z\": ");
                     let _ = serial.write(z.as_bytes());
                     let _ = serial.write(b"}\r\n");
                 }
