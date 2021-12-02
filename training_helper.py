@@ -1,7 +1,8 @@
 import serial
 import json
+import csv
 
-CONST_THRESHOLD = 5
+CONST_THRESHOLD = .05
 
 with serial.Serial() as ser:
     aX = 100
@@ -38,4 +39,11 @@ with serial.Serial() as ser:
         aY = dictionary["aY"]
         aZ = dictionary["aZ"]
 ser.close()
+
+keys = items[0].keys()
+
+with open('values.csv', 'w', newline='') as output_file:
+    dict_writer = csv.DictWriter(output_file, keys)
+    dict_writer.writeheader()
+    dict_writer.writerows(items)
 
