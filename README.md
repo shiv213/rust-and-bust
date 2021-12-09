@@ -26,9 +26,3 @@ Major components include the microcontroller to compile embedded rust, an inerti
 
 ## References
 - N/A
-
-## Running the Project
-- Clone the repository
-- Plug in Pico in bootloader mode
-- From the root directory, run the following command:
-- `cargo run --release`
