@@ -12,9 +12,9 @@ with serial.Serial() as ser:
         data = json.loads(raw)
         # print(data)
         if abs(data['accel_z']) > 1.99:
-            print("UP DOWN")
+            print("VERTICAL")
             time.sleep(1)
         if abs(data['accel_x']) > 1.99:
-            print("LEFT RIGHT")
+            print("HORIZONTAL")
             time.sleep(1)
     ser.close()
