@@ -47,7 +47,6 @@ use usbd_serial::SerialPort;
 // Serde support
 use serde::{Serialize, Deserialize};
 
-// TODO define custom struct for IMU data
 #[derive(Serialize, Deserialize)]
 struct IMUData {
     accel_x: f32,
@@ -159,32 +158,10 @@ fn main() -> ! {
         if mpu.get_motion_detected().unwrap() {
             led_pin.set_high().unwrap();
             // let _ = serial.write(b"MOTION\n");
-            // println!("r/p: {:?}", acc);
-            // let temp_i16 = i16::from_be_bytes(acc.x as u8) >> 5;
-            // let temp_f32 = f32::from(acc.x) * 0.125;
-            // let _ = writeln!(serial, "Temperature: {:0.2}°C", temp_f32);
-            // let _ = serial.write(&acc.x.to_bits().to_be_bytes());
         } else {
             led_pin.set_low().unwrap();
         }
 
-        // get roll and pitch estimate
-        // let acc = mpu.get_acc_angles()?;
-        // println!("r/p: {:?}", acc);
-
-        // get temp
-        // let temp = mpu.get_temp()?;
-        // println!("temp: {:?}c", temp);
-
-        // get gyro data, scaled with sensitivity
-        // let gyro = mpu.get_gyro()?;
-        // println!("gyro: {:?}", gyro);
-
-        // get accelerometer data, scaled with sensitivity
-        // let acc = mpu.get_acc()?;
-        // println!("acc: {:?}", acc);
-
-        // delay.delay_ms(1000);
 
         if usb_dev.poll(&mut [&mut serial]) {
             let mut buf = [0u8; 64];
@@ -196,17 +173,6 @@ fn main() -> ! {
                     // Do nothing
                 }
                 Ok(_count) => {
-                    // // Convert to upper case
-                    // buf.iter_mut().take(count).for_each(|b| {
-                    //     b.make_ascii_uppercase();
-                    // });
-                    // // Send back to the host
-                    // let mut wr_ptr = &buf[..count];
-                    // while !wr_ptr.is_empty() {
-                    //     let _ = serial.write(wr_ptr).map(|len| {
-                    //         wr_ptr = &wr_ptr[len..];
-                    //     });
-                    // }
                     let acc = mpu.get_acc().unwrap();
                     let data = IMUData {
                         accel_x: acc.x,
